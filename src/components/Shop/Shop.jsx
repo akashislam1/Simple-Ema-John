@@ -13,8 +13,20 @@ const Shop = () => {
   };
 
   const handleAddToCart = (product) => {
-    const neqCart = [...cart, product];
-    setCart(neqCart);
+    // const neqCart = [...cart, product];
+    // step 1
+    let newCart = [];
+    const exists = cart.find((pd) => pd.id === product.id);
+    if (!exists) {
+      product.quantity = 1;
+      newCart = [...cart, product];
+    } else {
+      exists.quantity = exists.quantity + 1;
+      const remaining = cart.filter((pd) => pd.id !== product.id);
+      newCart = [...remaining, exists];
+    }
+
+    setCart(newCart);
     addToDb(product.id);
   };
 
@@ -26,13 +38,18 @@ const Shop = () => {
 
   useEffect(() => {
     const storedCart = getShoppingCart();
+    const savedCart = [];
     // step 1: find id.
     for (const id in storedCart) {
       // get the product by using id from the stored cart and add it to the cart list if it exists already
       const addedProduct = products.find((p) => p.id === id);
-      const quantity = storedCart[id];
-      console.log(quantity);
+      if (addedProduct) {
+        const quantity = storedCart[id];
+        addedProduct.quantity = quantity;
+        savedCart.push(addedProduct);
+      }
     }
+    setCart(savedCart);
   }, [products]);
 
   return (
