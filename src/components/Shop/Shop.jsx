@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Cart from "../Cart/Cart";
 import { addToDb, getShoppingCart } from "../fakedb/fakedb";
 import Product from "../Product/Product";
+import { deleteShoppingCart } from "../../utilities/fakedb";
+import { Link } from "react-router-dom";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
@@ -10,6 +12,10 @@ const Shop = () => {
 
   const handleShowAll = () => {
     setShowAll(true);
+  };
+  const handleClear = () => {
+    setCart([]);
+    deleteShoppingCart();
   };
 
   const handleAddToCart = (product) => {
@@ -65,7 +71,29 @@ const Shop = () => {
           ))}
         </div>
         <div className="p-5 bg-amber-200">
-          <Cart cart={cart}></Cart>
+          <Cart cart={cart} handleClear={handleClear}>
+            <Link to="/orders">
+              <button className="mt-4 w-full flex justify-between gap-1 font-semibold   bg-red-600 text-white hover:bg-red-800 p-2  rounded-md">
+                Review Orders
+                <span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </Link>
+          </Cart>
         </div>
       </div>
       {!showAll && (

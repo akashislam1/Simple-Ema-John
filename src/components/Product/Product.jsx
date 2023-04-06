@@ -24,7 +24,7 @@ const Product = (props) => {
 
         <button
           onClick={() => handleAddToCart(props.product)}
-          className="w-100 flex justify-center gap-1 font-semibold bg-amber-300 hover:bg-orange-400 p-2 text-center rounded-b-md"
+          className=" flex justify-center gap-1 font-semibold bg-amber-300 hover:bg-orange-400 p-2 text-center rounded-b-md"
         >
           Add to Cart
           <span>

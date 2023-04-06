@@ -1,7 +1,7 @@
 import React from "react";
 
 const Review = ({ product, handleRemoveCart }) => {
-  console.log(product);
+  // console.log(product);
   const { id, img, name, price, shipping, quantity } = product;
   return (
     <>
